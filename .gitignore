@@ -1,0 +1,13 @@
+# OS / OneDrive junk
+desktop.ini
+Thumbs.db
+.DS_Store
+ehthumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Vercel
+.vercel
