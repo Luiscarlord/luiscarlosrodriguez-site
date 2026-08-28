@@ -85,6 +85,28 @@
   --accent-3:#34d399;
   --radius:14px;
   --max:1080px;
+  --hdr-bg:rgba(7,10,16,.72);
+  --hdr-bg-scrolled:rgba(7,10,16,.9);
+  --grid-line:rgba(255,255,255,.028);
+  --glow-opacity:.5;
+}
+
+[data-theme="light"]{
+  --bg:#f4f6fa;
+  --bg-2:#ffffff;
+  --surface:rgba(10,15,25,.035);
+  --border:rgba(10,15,25,.1);
+  --border-lit:rgba(37,99,235,.4);
+  --text:#10151f;
+  --muted:#4b5566;
+  --dim:#7c8698;
+  --accent:#2563eb;
+  --accent-2:#7c3aed;
+  --accent-3:#059669;
+  --hdr-bg:rgba(244,246,250,.78);
+  --hdr-bg-scrolled:rgba(244,246,250,.94);
+  --grid-line:rgba(10,15,25,.05);
+  --glow-opacity:.3;
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -98,19 +120,21 @@ body{
   line-height:1.65;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  transition:background .3s ease,color .3s ease;
 }
 
 /* ---------- ambient background ---------- */
 .bg-wrap{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
-.glow{position:absolute;border-radius:50%;filter:blur(110px);opacity:.5}
+.glow{position:absolute;border-radius:50%;filter:blur(110px);opacity:var(--glow-opacity);transition:opacity .3s ease}
 .glow.a{width:640px;height:640px;top:-260px;left:-160px;background:radial-gradient(circle,rgba(59,130,246,.36),transparent 68%)}
 .glow.b{width:560px;height:560px;top:38%;right:-220px;background:radial-gradient(circle,rgba(167,139,250,.28),transparent 68%)}
 .glow.c{width:520px;height:520px;bottom:-200px;left:26%;background:radial-gradient(circle,rgba(52,211,153,.16),transparent 68%)}
 .grid-bg{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
+  background-image:linear-gradient(var(--grid-line) 1px,transparent 1px),
+                   linear-gradient(90deg,var(--grid-line) 1px,transparent 1px);
   background-size:64px 64px;
+  transition:background-image .3s ease;
   mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 20%,transparent 78%);
   -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 20%,transparent 78%);
 }
@@ -123,11 +147,23 @@ section{padding:96px 0;position:relative}
 header{
   position:sticky;top:0;z-index:50;
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-  background:rgba(7,10,16,.72);
+  background:var(--hdr-bg);
   border-bottom:1px solid transparent;
   transition:border-color .3s ease, background .3s ease;
 }
-header.scrolled{border-bottom-color:var(--border);background:rgba(7,10,16,.9)}
+header.scrolled{border-bottom-color:var(--border);background:var(--hdr-bg-scrolled)}
+
+.theme-toggle{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:9px;border:1px solid var(--border);
+  background:var(--surface);color:var(--text);cursor:pointer;
+  transition:all .22s ease;flex-shrink:0;
+}
+.theme-toggle:hover{border-color:var(--border-lit);background:rgba(96,165,250,.09)}
+.theme-toggle svg{width:16px;height:16px}
+.theme-toggle .icon-sun{display:none}
+[data-theme="light"] .theme-toggle .icon-moon{display:none}
+[data-theme="light"] .theme-toggle .icon-sun{display:block}
 nav{max-width:var(--max);margin:0 auto;padding:16px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .brand{
   font-family:'JetBrains Mono',monospace;font-weight:500;font-size:.95rem;
@@ -169,6 +205,16 @@ h1 .grad{
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;
 }
+[data-theme="light"] h1 .grad{
+  background:linear-gradient(105deg,#10151f 8%,var(--accent) 48%,var(--accent-2) 88%);
+  -webkit-background-clip:text;background-clip:text;
+}
+.cursor{
+  display:inline-block;width:.5ch;margin-left:6px;color:var(--accent);
+  font-family:'JetBrains Mono',monospace;
+  animation:blink 1.1s step-end infinite;
+}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
 .lede{font-size:clamp(1.02rem,2.1vw,1.2rem);color:var(--muted);max-width:640px;margin-bottom:22px}
 .lede strong{color:var(--text);font-weight:550}
 .meta-row{
@@ -292,10 +338,22 @@ footer{border-top:1px solid var(--border);padding:26px 0}
   .reveal{opacity:1;transform:none;transition:none}
   html{scroll-behavior:auto}
   .dot{animation:none}
+  .cursor{animation:none;opacity:.6}
 }
 
 ::selection{background:rgba(96,165,250,.3);color:#fff}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+@media print{
+  .bg-wrap,.grid-bg,header,.cta-row,.theme-toggle,.cursor{display:none!important}
+  body{background:#fff;color:#000}
+  .reveal{opacity:1!important;transform:none!important}
+  a{color:#000!important;text-decoration:underline}
+  section{padding:20px 0}
+  h1 .grad{-webkit-text-fill-color:#000!important;color:#000!important;background:none!important}
+  .panel,.job-card,.ccard{border-color:#ccc!important;background:none!important;box-shadow:none!important}
+  .tag,.tag.alt,.tag.alt2{background:none!important;border-color:#999!important;color:#000!important}
+}
 </style>
 </head>
 <body>
@@ -314,6 +372,10 @@ footer{border-top:1px solid var(--border);padding:26px 0}
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#contact" data-optional>Contact</a>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
     </div>
   </nav>
 </header>
@@ -325,7 +387,7 @@ footer{border-top:1px solid var(--border);padding:26px 0}
     <div class="wrap">
       <div class="eyebrow reveal"><span class="dot"></span> Open to conversations</div>
 
-      <h1 class="reveal">Luis Carlos<br><span class="grad">Rodriguez</span></h1>
+      <h1 class="reveal">Luis Carlos<br><span class="grad">Rodriguez</span><span class="cursor" aria-hidden="true">_</span></h1>
 
       <p class="lede reveal">
         Solution Architect &amp; Delivery Lead. I turn <strong>ambiguous business goals</strong>
@@ -561,6 +623,23 @@ footer{border-top:1px solid var(--border);padding:26px 0}
 </footer>
 
 <script>
+// theme init (light/dark toggle, persisted)
+(function(){
+  const root = document.documentElement;
+  const stored = localStorage.getItem('theme');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const initial = stored || (prefersLight ? 'light' : 'dark');
+  if (initial === 'light') root.setAttribute('data-theme', 'light');
+  const themeBtn = document.getElementById('theme-toggle');
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const isLight = root.getAttribute('data-theme') === 'light';
+      if (isLight) { root.removeAttribute('data-theme'); localStorage.setItem('theme', 'dark'); }
+      else { root.setAttribute('data-theme', 'light'); localStorage.setItem('theme', 'light'); }
+    });
+  }
+})();
+
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 // sticky header border
