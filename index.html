@@ -306,6 +306,23 @@ h2{font-size:clamp(1.8rem,4vw,2.5rem);letter-spacing:-.028em;font-weight:650;lin
 }
 @media(max-width:560px){.job-card{padding:20px}.timeline{padding-left:24px}.job::before{left:-23px}}
 
+/* ---------- case studies ---------- */
+.cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+.case-card{
+  border:1px solid var(--border);border-radius:var(--radius);padding:26px;
+  background:linear-gradient(165deg,rgba(255,255,255,.04),rgba(255,255,255,.01));
+  transition:border-color .25s ease, transform .25s ease;
+}
+.case-card:hover{border-color:var(--border-lit);transform:translateY(-3px)}
+.case-industry{
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:block;
+}
+.case-title{font-size:1.08rem;font-weight:600;letter-spacing:-.01em;margin-bottom:14px}
+.case-card ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.case-card li{position:relative;padding-left:19px;color:var(--muted);font-size:.9rem;line-height:1.6}
+.case-card li::before{content:'';position:absolute;left:0;top:.62em;width:6px;height:1px;background:var(--accent);opacity:.65}
+
 /* ---------- contact ---------- */
 .contact{text-align:center;padding-bottom:110px}
 .contact h2{margin-bottom:14px}
@@ -351,7 +368,7 @@ footer{border-top:1px solid var(--border);padding:26px 0}
   a{color:#000!important;text-decoration:underline}
   section{padding:20px 0}
   h1 .grad{-webkit-text-fill-color:#000!important;color:#000!important;background:none!important}
-  .panel,.job-card,.ccard{border-color:#ccc!important;background:none!important;box-shadow:none!important}
+  .panel,.job-card,.ccard,.case-card{border-color:#ccc!important;background:none!important;box-shadow:none!important}
   .tag,.tag.alt,.tag.alt2{background:none!important;border-color:#999!important;color:#000!important}
 }
 </style>
@@ -371,6 +388,7 @@ footer{border-top:1px solid var(--border);padding:26px 0}
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#experience">Experience</a>
+      <a href="#work">Work</a>
       <a href="#contact" data-optional>Contact</a>
       <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color theme">
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/></svg>
@@ -438,22 +456,25 @@ footer{border-top:1px solid var(--border);padding:26px 0}
       <div class="about-grid">
         <div class="about-body reveal">
           <p>
-            I'm an <strong>Industrial Engineer</strong> who ended up living in the gap between what
-            executives say they want and what a platform can actually do. Most of my work starts
-            in a discovery workshop with a whiteboard full of contradictions and ends with a
-            configured, governed system that people actually use.
+            I'm an <strong>Industrial Engineer</strong> working as a Senior PPM Consultant and
+            Solution &amp; Functional Architect — living in the gap between what executives say
+            they want and what a platform can actually do. Most of my work starts in a discovery
+            workshop with a whiteboard full of contradictions and ends with a configured, tested,
+            governed system that people actually use.
           </p>
           <p>
             Today I lead delivery for strategic accounts at <strong>Initiativa</strong>, a Planview
-            Elite Partner, designing governance models for capital planning and portfolio
-            management. Before that, three years at <strong>Oracle</strong> taught me how to
-            re-engineer legacy processes into standard cloud capabilities instead of drowning
-            clients in customization debt.
+            Elite Partner — translating ambiguous business requirements into work types, lifecycles,
+            governance models and financial structures, then configuring, testing and playing them
+            back until the design holds up under real use. Before that, three years at <strong>Oracle</strong>
+            taught me how to re-engineer legacy processes into standard cloud capabilities instead
+            of drowning clients in customization debt.
           </p>
           <p>
-            The through-line is the same everywhere: <strong>scope it honestly, configure it for
-            scale, and make sure the people on the other side of the rollout know what to do
-            with it.</strong>
+            My strongest contribution is closing the distance between design and proof: I don't stop
+            at recommendations or diagrams — I configure the real environment, surface the gaps, and
+            keep the work moving through data migration, enablement and go-live until it's usable by
+            the people who inherit it.
           </p>
         </div>
 
@@ -466,6 +487,7 @@ footer{border-top:1px solid var(--border);padding:26px 0}
               <span class="tag">Client Onboarding</span>
               <span class="tag">Portfolio Governance</span>
               <span class="tag">Capital Planning</span>
+              <span class="tag">Presales &amp; RFP Support</span>
             </div>
           </div>
           <div class="panel">
@@ -476,6 +498,8 @@ footer{border-top:1px solid var(--border);padding:26px 0}
               <span class="tag alt">SQL Analysis</span>
               <span class="tag alt">Power BI</span>
               <span class="tag alt">Integration Design</span>
+              <span class="tag alt">Resource &amp; Capacity Planning</span>
+              <span class="tag alt">Data Migration</span>
             </div>
           </div>
           <div class="panel">
@@ -575,11 +599,64 @@ footer{border-top:1px solid var(--border);padding:26px 0}
     </div>
   </section>
 
+  <!-- SELECTED WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-num">03 — Selected Work</span>
+        <h2>Representative engagements</h2>
+        <p class="sec-sub">Client names are withheld under NDA — these reflect the type and scale of work I've personally driven, from discovery through go-live.</p>
+      </div>
+
+      <div class="cases-grid">
+        <article class="case-card reveal">
+          <span class="case-industry">Global Mining &amp; Capital Projects</span>
+          <h3 class="case-title">Enterprise Portfolio Management Implementation</h3>
+          <ul>
+            <li>Configured intake, work types, stage-gates, and organizational/financial structures for a global capital-projects portfolio.</li>
+            <li>Structured data-collection gaps into clear configuration decisions and customer playback material.</li>
+            <li>Designed document management, permissions, version control, and SharePoint-linked collaboration workflows.</li>
+            <li>Coordinated solution reviews, vendor escalations, and stakeholder decision tracking through go-live.</li>
+          </ul>
+        </article>
+
+        <article class="case-card reveal">
+          <span class="case-industry">Global Dairy &amp; Food Manufacturing</span>
+          <h3 class="case-title">Data Segregation &amp; Resource Planning</h3>
+          <ul>
+            <li>Designed enterprise-level separation of a business unit across work, resource, and strategy structures.</li>
+            <li>Analyzed permissions and data-segregation risk, including reporting and analytics visibility implications.</li>
+            <li>Facilitated resource and capacity planning workshops, converting findings into prioritized follow-up actions.</li>
+          </ul>
+        </article>
+
+        <article class="case-card reveal">
+          <span class="case-industry">Global Animal Nutrition</span>
+          <h3 class="case-title">Investment &amp; Capacity Planning</h3>
+          <ul>
+            <li>Supported investment and capacity-planning workflows with hands-on, customer-facing guidance.</li>
+            <li>Built reusable data-migration templates and load files, cutting setup time on later projects.</li>
+            <li>Owned the recurring support and reporting cadence for ongoing platform use.</li>
+          </ul>
+        </article>
+
+        <article class="case-card reveal">
+          <span class="case-industry">Global Chemicals Manufacturing</span>
+          <h3 class="case-title">Automation &amp; Reporting Delivery Coordination</h3>
+          <ul>
+            <li>Coordinated between customer and vendor teams to deliver an automated reporting tool to validated accuracy.</li>
+            <li>Tracked testing, timelines, and stakeholder communication through final delivery closure.</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- CONTACT -->
   <section id="contact" class="contact">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="sec-num">03 — Contact</span>
+        <span class="sec-num">04 — Contact</span>
         <h2>Let's talk</h2>
         <p class="sec-sub">Whether it's a portfolio rollout, an ERP question, or just a conversation — the inbox is open.</p>
       </div>
